@@ -9,6 +9,8 @@ import conexion.Conexion;
 import interfaces.metodos;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,8 +37,8 @@ public class FiltroDao implements metodos<Filtro> {
             ps = con.getCnx().prepareStatement(SQL_INSERT);
             ps.setString(1, g.getCodigo());
             ps.setString(2, g.getMarca());
-            ps.setString(3, g.getStock());
-            ps.setString(4, true);
+            ps.setInt(3, g.getStock());
+            ps.setBoolean(4, true);
             if (ps.executeUpdate() > 0) {
                 return true;
             }
@@ -73,9 +75,9 @@ public class FiltroDao implements metodos<Filtro> {
         try {
             System.out.println(c.getCodigo());
             ps = con.getCnx().prepareStatement(SQL_UPDATE);
-            ps.setString(1, c.getMarca);
-            ps.setString(2, c.getStock());
-            ps.setString(3, c.getExistencia());
+            ps.setString(1, c.getMarca());
+            ps.setInt(2, c.getStock());
+            ps.setBoolean(3, c.getExistencia());
             ps.setString(4, c.getCodigo());
             if (ps.executeUpdate() > 0) {
                 return true;

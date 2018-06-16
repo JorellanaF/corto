@@ -5,10 +5,12 @@
  */
 package conexion;
 
-import com.mysql.jdbc.Connection;
-import com.sun.istack.internal.logging.Logger;
-import java.sql.DriverManager;
-import java.util.logging.Level;
+import com.mysql.jdbc.Connection;//
+//import com.sun.istack.internal.logging.Logger;
+import java.sql.DriverManager;//
+import java.sql.SQLException;//
+import java.util.logging.Level;//
+import java.util.logging.Logger;
 
 /**
  *
@@ -19,10 +21,8 @@ public class Conexion {
     private String pass;
     private String driver;
     private String url;
-    
     private Connection cnx;
     public static Conexion instance;
-    
     public synchronized static Conexion conectar(){
         if(instance==null){
             return new Conexion();
@@ -30,7 +30,6 @@ public class Conexion {
         }
         return instance;
     }
-    
     private Conexion(){
         cargarCredenciales();
         
@@ -38,7 +37,7 @@ public class Conexion {
             Class.forName(this.driver);
             cnx=(Connection) DriverManager.getConnection(this.url, this.user, this.pass);
         }catch(ClassNotFoundException | SQLException ex){
-            Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE,null, ex);
         }
     }
     

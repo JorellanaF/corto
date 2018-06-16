@@ -16,6 +16,10 @@ public class Filtro {
     private int stock;
     private boolean existencia;
     
+    public Filtro(){
+        
+    }
+    
     public Filtro(int id, String codigo, String marca, int stock, boolean existencia){
         this.id=id;
         this.marca=marca;
