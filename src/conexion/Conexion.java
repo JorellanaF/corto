@@ -1,12 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package conexion;
 
 import com.mysql.jdbc.Connection;//
-//import com.sun.istack.internal.logging.Logger;
 import java.sql.DriverManager;//
 import java.sql.SQLException;//
 import java.util.logging.Level;//
@@ -42,10 +36,10 @@ public class Conexion {
     }
     
     private void cargarCredenciales(){
-        user="root";
-        pass="";
-        driver="com.mysql.jdbc.Driver";
-        url="jdbc:mysql://localhost/filtros";
+        user = "root";
+        pass = "";
+        driver = "com.mysql.jdbc.Driver";
+        url = "jdbc:mysql://localhost/filtros";
     }
     
     public Connection getCnx(){
@@ -53,6 +47,6 @@ public class Conexion {
     }
     
     public void cerrarConexion(){
-        instance=null;
+        instance = null;
     }
 }
