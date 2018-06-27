@@ -253,7 +253,7 @@ public class Consulta extends JFrame{
         limpiar.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                limpiarCampos();
             }
         }); 
     }
