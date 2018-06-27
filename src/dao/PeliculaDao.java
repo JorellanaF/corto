@@ -16,9 +16,9 @@ import modelo.Pelicula;
  * @author Jorge Orellana <00103717@uca.edu.sv>
  */
 public class PeliculaDao implements Metodos<Pelicula> {
-    private static final String SQL_INSERT = "INSERT INTO movie(nombre,director,pais,clasificacion,annio,existencia) "
-            + "VALUES(?,?,?,?,?)";
-    private static final String SQL_UPDATE = "UPDATE movie SET director = ?,pais = ?,clasificacion = ?,annio = ?,existencia = ? "
+    private static final String SQL_INSERT = "INSERT INTO movie(nombre,director,pais,clasificacion,anio,en_proyeccion) "
+            + "VALUES(?,?,?,?,?,?)";
+    private static final String SQL_UPDATE = "UPDATE movie SET director = ?,pais = ?,clasificacion = ?,anio = ?,en_proyeccion = ? "
             + "WHERE nombre=?";
     private static final String SQL_DELETE = "DELETE FROM movie WHERE nombre=?";
     private static final String SQL_READ = "SELECT * FROM movie WHERE nombre=?";
@@ -30,12 +30,12 @@ public class PeliculaDao implements Metodos<Pelicula> {
         PreparedStatement ps;
         try {
             ps = con.getCnx().prepareStatement(SQL_INSERT);
-            ps.setString(2, g.getNombre());
-            ps.setString(3, g.getDirector());
-            ps.setString(4, g.getPais());
-            ps.setString(5, g.getClasificacion());
-            ps.setString(6, g.getAnnio().toString());
-            ps.setBoolean(7, true);
+            ps.setString(1, g.getNombre());
+            ps.setString(2, g.getDirector());
+            ps.setString(3, g.getPais());
+            ps.setString(4, g.getClasificacion());
+            ps.setString(5, g.getAnnio());
+            ps.setBoolean(6, true);
             if (ps.executeUpdate() > 0) {
                 return true;
             }
@@ -72,12 +72,12 @@ public class PeliculaDao implements Metodos<Pelicula> {
         try {
             System.out.println(c.getNombre());
             ps = con.getCnx().prepareStatement(SQL_UPDATE);
-            ps.setString(3, c.getDirector());
-            ps.setString(4, c.getPais());
-            ps.setString(5, c.getClasificacion());
-            ps.setString(6, c.getAnnio());
-            ps.setBoolean(7, c.isExistencia());
-            ps.setString(2, c.getNombre());
+            ps.setString(1, c.getDirector());
+            ps.setString(2, c.getPais());
+            ps.setString(3, c.getClasificacion());
+            ps.setString(4, c.getAnnio());
+            ps.setBoolean(5, c.isExistencia());
+            ps.setString(6, c.getNombre());
             if (ps.executeUpdate() > 0) {
                 return true;
             }
