@@ -1,71 +1,56 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package modelo;
+
 /**
  *
- * @author LN710Q
+ * @author Jorge Orellana <00103717@uca.edu.sv>
  */
 public class Pelicula {
     private int id;
     private String nombre;
-    private String annio;
     private String director;
-    private String paisp;
+    private String pais;
     private String clasificacion;
-    private int stock;
-    private boolean existenciap;
+    private String annio;
+    private boolean existencia;
     
     public Pelicula(){
         
-    }
-    
-    public Pelicula(int id, String nombre, String annio,String director,String paisp,String clasificacion, int stock, boolean existenciap){
+    }   
+
+    public Pelicula(int id, String nombre, String director, String pais, String clasificacion, String annio, boolean existencia) {
         this.id = id;
-        this.annio = annio;
+        this.nombre = nombre;
         this.director = director;
-        this.paisp = paisp;
+        this.pais = pais;
         this.clasificacion = clasificacion;
-        this.stock = stock;
-        this.existenciap = existenciap;
-        this.nombre=nombre;
-    }
-    public Pelicula(String codigo, String annio, int stock,String clasificacion, boolean existenciap){
-        this.nombre=nombre;
-        this.annio=annio;
-        this.clasificacion=clasificacion;
-        this.stock=stock;
-        this.existenciap=existenciap;
-    }
-    public Pelicula(String annio, int stock, boolean existenciap){
         this.annio = annio;
-        this.stock = stock;
-        this.existenciap = existenciap;
+        this.existencia = existencia;
+    }
+
+    public Pelicula(String nombre, String director, String pais, String clasificacion, String annio, boolean existencia) {
+        this.nombre = nombre;
+        this.director = director;
+        this.pais = pais;
+        this.clasificacion = clasificacion;
+        this.annio = annio;
+        this.existencia = existencia;
+    }
+
+    public Pelicula(String director, String pais, String clasificacion, String annio, boolean existencia) {
+        this.director = director;
+        this.pais = pais;
+        this.clasificacion = clasificacion;
+        this.annio = annio;
+        this.existencia = existencia;
     }
 
     public int getId() {
         return id;
-    }
-
-    public String getPaisp() {
-        return paisp;
-    }
-
-    public void setPaisp(String paisp) {
-        this.paisp = paisp;
-    }
-
-    public String getClasificacion() {
-        return clasificacion;
-    }
-
-    public void setClasificacion(String clasificacion) {
-        this.clasificacion = clasificacion;
-    }
-
-    public String getDirector() {
-        return director;
-    }
-
-    public void setDirector(String director) {
-        this.director = director;
     }
 
     public void setId(int id) {
@@ -80,6 +65,30 @@ public class Pelicula {
         this.nombre = nombre;
     }
 
+    public String getDirector() {
+        return director;
+    }
+
+    public void setDirector(String director) {
+        this.director = director;
+    }
+
+    public String getPais() {
+        return pais;
+    }
+
+    public void setPais(String pais) {
+        this.pais = pais;
+    }
+
+    public String getClasificacion() {
+        return clasificacion;
+    }
+
+    public void setClasificacion(String clasificacion) {
+        this.clasificacion = clasificacion;
+    }
+
     public String getAnnio() {
         return annio;
     }
@@ -88,25 +97,12 @@ public class Pelicula {
         this.annio = annio;
     }
 
-    public int getStock() {
-        return stock;
+    public boolean isExistencia() {
+        return existencia;
     }
 
-    public void setStock(int stock) {
-        this.stock = stock;
+    public void setExistencia(boolean existencia) {
+        this.existencia = existencia;
     }
 
-    public boolean isExistenciap() {
-        return existenciap;
-    }
-
-    public void setExistenciap(boolean existenciap) {
-        this.existenciap = existenciap;
-    }
-    
-    public boolean getExistenciap(){
-        return existenciap;
-    }
-    
-    
 }

@@ -20,26 +20,19 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import modelo.Pelicula;
 
+
 /**
  *
- * @author LN710Q
+ * @author Jorge Orellana <00103717@uca.edu.sv>
  */
 public class Consulta extends JFrame{
-    
     public JLabel lblNombre, lblDirector,lblPais,lblAnnio, lblClasificacion,lblExistencia;
-    public JTextField nombre, director, pais,annioT;
-    public JComboBox annio;
+    public JTextField nombre, director, stock,pais,annioT;
+    public JComboBox clasificacion;
     
-    ButtonGroup clasificacion=new ButtonGroup();
     ButtonGroup existencia=new ButtonGroup();
     public JRadioButton si;
     public JRadioButton no;
-    public JRadioButton G;
-    public JRadioButton PG;
-    public JRadioButton A14;
-    public JRadioButton A18;
-    public JRadioButton R;
-    public JRadioButton A;
     public JTable resultados;
     
     public JPanel table;
@@ -50,7 +43,7 @@ public class Consulta extends JFrame{
     DefaultTableModel tm;
     
     public Consulta(){
-        super("Inventario");
+        super("Cinepolix");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
         agregarLabels();
@@ -62,26 +55,21 @@ public class Consulta extends JFrame{
         container.add(lblClasificacion);
         container.add(lblDirector);
         container.add(lblPais);
+        container.add(lblExistencia);
         container.add(nombre);
-        container.add(annio);
+        container.add(clasificacion);
         container.add(director);
         container.add(annioT);
         container.add(pais);
         container.add(si);
         container.add(no);
-        container.add(G);
-        container.add(PG);
-        container.add(A14);
-        container.add(A18);
-        container.add(R);
-        container.add(A);
         container.add(buscar);
         container.add(insertar);
         container.add(actualizar);
         container.add(eliminar);
         container.add(limpiar);
         container.add(table);
-        setSize(600,600);
+        setSize(600,400);
         eventos();
     }
 
@@ -91,27 +79,24 @@ public class Consulta extends JFrame{
         lblClasificacion = new JLabel("Clasificacion");
         lblDirector = new JLabel("Director");
         lblPais = new JLabel("Pais");
+        lblExistencia = new JLabel("En existencia");
         lblNombre.setBounds(10,10,ANCHOC, ALTOC);
-        lblAnnio.setBounds(300,100,ANCHOC, ALTOC);
+        lblAnnio.setBounds(300,60,ANCHOC, ALTOC);
         lblDirector.setBounds(10,60,ANCHOC, ALTOC);
         lblPais.setBounds(10, 100, ANCHOC, ALTOC);
         lblClasificacion.setBounds(300, 10, ANCHOC, ALTOC);
+        lblExistencia.setBounds(300, 100, ANCHOC, ALTOC);
     }
 
     private void formulario() {
         nombre = new JTextField();
-        annio = new JComboBox();
+        clasificacion = new JComboBox();
         director = new JTextField();
+        stock = new JTextField();
         pais = new JTextField();
         annioT = new JTextField();
         si=new JRadioButton("si",true);
         no=new JRadioButton("no");
-        G=new JRadioButton("G");
-        PG=new JRadioButton("PG");
-        A14=new JRadioButton("A14");
-        A18=new JRadioButton("A18");
-        R=new JRadioButton("R");
-        A=new JRadioButton("A");
         resultados=new JTable();
         buscar=new JButton("Buscar");
         insertar=new JButton("Insertar");
@@ -121,18 +106,12 @@ public class Consulta extends JFrame{
         
         table=new JPanel();
         
-        annio.addItem("FRAM");
-        annio.addItem("WIX");
-        annio.addItem("Luber Finer");
-        annio.addItem("OSK");
-        
-        clasificacion = new ButtonGroup();
-        clasificacion.add(G);
-        clasificacion.add(PG);
-        clasificacion.add(A14);
-        clasificacion.add(A18);
-        clasificacion.add(R);
-        clasificacion.add(A);
+        clasificacion.addItem("G");
+        clasificacion.addItem("PG");
+        clasificacion.addItem("14A");
+        clasificacion.addItem("18A");
+        clasificacion.addItem("R");
+        clasificacion.addItem("A");
         
         existencia = new ButtonGroup();
         existencia.add(si);
@@ -144,24 +123,32 @@ public class Consulta extends JFrame{
         buscar.setBounds(440, 210, ANCHOC, ALTOC);
         actualizar.setBounds(300, 210, ANCHOC, ALTOC);
         limpiar.setBounds(4500, 210, ANCHOC, ALTOC);
+        clasificacion.setBounds(400, 10, ANCHOC, ALTOC);
         director.setBounds(100, 60, ANCHOC, ALTOC);
         pais.setBounds(100, 100, ANCHOC, ALTOC);
-        annioT.setBounds(350, 100, ANCHOC, ALTOC);
+        annioT.setBounds(350, 60, ANCHOC, ALTOC);
         //G.setBounds(WIDTH, WIDTH, WIDTH, HEIGHT);
+        si.setBounds(400, 100, 50, ALTOC);
+        no.setBounds(450, 100, 50, ALTOC);
         resultados=new JTable();
         table.setBounds(10,250,500,200);
         table.add(new JScrollPane(resultados));
     }
 
     private void llenarTabla() {
-        tm=new DefaultTableModel(){
+        tm = new DefaultTableModel(){
             public Class<?> getColumnClass(int column){
                 switch(column){
                     case 0:
+                        return String.class;
                     case 1:
                         return String.class;
                     case 2:
                         return String.class;
+                    case 3:
+                        return String.class;
+                    case 4:
+                        return String.class;                        
                     default:
                         return Boolean.class;
                 }
@@ -172,16 +159,16 @@ public class Consulta extends JFrame{
         tm.addColumn("Pais");
         tm.addColumn("Clasificacion");
         tm.addColumn("Año");
-        tm.addColumn("Stock");
-        tm.addColumn("Stock em sucursal");
+        tm.addColumn("En proyección");
         
         PeliculaDao fd =new PeliculaDao();
-        ArrayList<Pelicula> filtros= fd.readAll();
+        ArrayList<Pelicula> peliculas= fd.readAll();
         
-        for(Pelicula fil: filtros){
-            tm.addRow(new Object[]{fil.getNombre(),fil.getDirector(),fil.getPaisp(),fil.getClasificacion(), fil.getAnnio(), fil.getStock(),fil.getExistenciap()});
+        for(Pelicula fil: peliculas){
+            tm.addRow(new Object[]{fil.getNombre(),fil.getDirector(),fil.getPais(),fil.getClasificacion(), 
+                fil.getAnnio(),fil.isExistencia()});
         
-    }
+        }
         resultados.setModel(tm);
     }
 
@@ -190,9 +177,10 @@ public class Consulta extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 PeliculaDao fd =new PeliculaDao();
-                Pelicula f=new Pelicula(nombre.getText(), annio.getSelectedItem().toString(), Integer.parseInt(director.getText()),clasificacion.getSelection().getActionCommand(),true);
+                Pelicula f = new Pelicula(nombre.getText(), director.getText(),pais.getText(),
+                        clasificacion.getSelectedItem().toString(),annioT.getText(),true);
                 if(no.isSelected()){
-                    f.setExistenciap(false);
+                    f.setExistencia(false);
                 }
                 if(fd.create(f)){
                     JOptionPane.showMessageDialog(null, "Filtro registrado con exito.");
@@ -208,9 +196,10 @@ public class Consulta extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 PeliculaDao fd= new PeliculaDao();
-                Pelicula f=new Pelicula(nombre.getText(), annio.getSelectedItem().toString(), Integer.parseInt(director.getText()),clasificacion.getSelection().getActionCommand(),true);
+                Pelicula f=new Pelicula(nombre.getText(), director.getText(),pais.getText(),
+                        clasificacion.getSelectedItem().toString(),annioT.getText(),true);
                 if(no.isSelected()){
-                    f.setExistenciap(false);
+                    f.setExistencia(false);
                 }
                 if(fd.create(f)){
                     JOptionPane.showMessageDialog(null, "Filtro modificado con exito.");
@@ -247,9 +236,11 @@ public class Consulta extends JFrame{
                 }
                 else{
                     nombre.setText(f.getNombre());////////////////////////////
-                    annio.setSelectedItem(f.getAnnio());
-                    director.setText(Integer.toString(f.getStock()));
-                    if(f.getExistenciap()){
+                    director.setText(f.getDirector());
+                    pais.setText(f.getPais());
+                    clasificacion.setSelectedItem(f.getClasificacion());
+                    annioT.setText(f.getAnnio());
+                    if(f.isExistencia()){
                         si.setSelected(true);
                     }
                     else{
@@ -268,9 +259,12 @@ public class Consulta extends JFrame{
     }
     public void limpiarCampos(){
         nombre.setText("");
-        annio.setSelectedItem("FRAM");
         director.setText("");
+        pais.setText("");
+        clasificacion.setSelectedItem("G");
+        annioT.setText("");
     }
+    
     public static void main(String[] args){
         java.awt.EventQueue.invokeLater(new Runnable(){
             @Override
@@ -278,5 +272,5 @@ public class Consulta extends JFrame{
                 new Consulta().setVisible(true);
             }
         });
-    }
-    }
+    }    
+}
