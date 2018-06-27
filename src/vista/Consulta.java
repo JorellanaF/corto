@@ -201,7 +201,7 @@ public class Consulta extends JFrame{
                 if(no.isSelected()){
                     f.setExistencia(false);
                 }
-                if(fd.create(f)){
+                if(fd.update(f)){
                     JOptionPane.showMessageDialog(null, "Filtro modificado con exito.");
                     limpiarCampos();
                     llenarTabla();
